@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gadgets in BD — Genuine electronics, delivered fast</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="brand">Gadgets<span class="dot">.</span>BD</a>
+    <div class="nav-search">
+      <span>🔍</span>
+      <input type="text" id="navSearchInput" placeholder="search gadgets --by name, brand" />
+    </div>
+    <div class="nav-links">
+      <a href="/products.html" class="nav-icon-link">Shop</a>
+      <a href="/admin.html" id="adminLink" class="nav-icon-link" style="display:none;">Admin</a>
+      <a href="/cart.html" class="nav-icon-link">
+        🛒 Cart
+        <span class="cart-badge" id="cartCount" style="display:none;">0</span>
+      </a>
+      <span id="accountSlot"></span>
+    </div>
+  </div>
+  <div class="category-strip" id="categoryStrip"></div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <span class="eyebrow">Now shipping across Bangladesh</span>
+      <h1>Real gadgets.<br/>Real specs.<br/>No guesswork.</h1>
+      <p class="lede">Every listing on Gadgets in BD ships with the exact spec sheet, genuine warranty, and a price that doesn't hide fees. Pay by Cash on Delivery, bKash, or Nagad.</p>
+      <div class="hero-cta">
+        <a href="/products.html" class="btn btn-accent">Browse the catalog</a>
+        <a href="/products.html?category=Smartphones" class="btn btn-outline">Shop smartphones</a>
+      </div>
+    </div>
+    <div class="hero-stage">
+      <div class="spec-callout sc-1"><span class="k">Display</span><span class="v">6.8" AMOLED</span></div>
+      <div class="spec-callout sc-2"><span class="k">Battery</span><span class="v">5000 mAh</span></div>
+      <div class="spec-callout sc-3"><span class="k">Camera</span><span class="v">200 MP</span></div>
+      <div class="spec-callout sc-4"><span class="k">RAM</span><span class="v">12 GB</span></div>
+      <div class="hero-product" style="background:#12172b;">📱</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Shop by category</span>
+        <h2 style="margin-top:.2em;">Find your next upgrade</h2>
+      </div>
+    </div>
+    <div class="grid" id="categoryGrid" style="grid-template-columns: repeat(auto-fill, minmax(160px,1fr));"></div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Featured drops</span>
+        <h2 style="margin-top:.2em;">Popular right now</h2>
+      </div>
+      <a href="/products.html" class="btn btn-outline btn-sm">View all products</a>
+    </div>
+    <div class="grid" id="featuredGrid"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div>
+      <strong>Gadgets in BD</strong>
+      <p class="text-sm mt-8" style="max-width:36ch">Genuine electronics, fast delivery across Bangladesh, and prices that make sense. Est. 2026.</p>
+    </div>
+    <div class="text-sm">
+      <div>📍 Dhaka, Bangladesh</div>
+      <div class="mt-8">☎ +880 1700-000000</div>
+      <div class="mt-8">✉ support@gadgetsinbd.com</div>
+    </div>
+    <div class="text-sm">
+      <div>Cash on Delivery · bKash · Nagad</div>
+      <div class="mt-8">7-day replacement warranty</div>
+    </div>
+  </div>
+</footer>
+
+<div id="toast"></div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/cart.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/pages/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign in — Gadgets in BD</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="brand">Gadgets<span class="dot">.</span>BD</a>
+  </div>
+</nav>
+
+<div class="form-card">
+  <span class="eyebrow">Welcome back</span>
+  <h2 style="margin-top:.2em;">Sign in</h2>
+  <div id="formError" class="form-error" style="display:none;"></div>
+  <form id="loginForm">
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="email" required autocomplete="email" />
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="password" required autocomplete="current-password" />
+    </div>
+    <button type="submit" class="btn btn-primary btn-block" id="submitBtn">Sign in</button>
+  </form>
+  <p class="text-sm text-center mt-16">New here? <a href="/register.html" style="text-decoration:underline;">Create an account</a></p>
+  <p class="text-sm text-soft mt-16" style="border-top:1px solid var(--line); padding-top:12px;">
+    Admin demo login — email <span class="mono">admin@gadgetsinbd.com</span>, password from your <span class="mono">.env</span> file.
+  </p>
+</div>
+
+<div id="toast"></div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/cart.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/pages/login.js"></script>
+</body>
+</html>

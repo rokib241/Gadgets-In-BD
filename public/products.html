@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shop all gadgets — Gadgets in BD</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="brand">Gadgets<span class="dot">.</span>BD</a>
+    <div class="nav-search">
+      <span>🔍</span>
+      <input type="text" id="navSearchInput" placeholder="search gadgets --by name, brand" />
+    </div>
+    <div class="nav-links">
+      <a href="/products.html" class="nav-icon-link">Shop</a>
+      <a href="/admin.html" id="adminLink" class="nav-icon-link" style="display:none;">Admin</a>
+      <a href="/cart.html" class="nav-icon-link">
+        🛒 Cart
+        <span class="cart-badge" id="cartCount" style="display:none;">0</span>
+      </a>
+      <span id="accountSlot"></span>
+    </div>
+  </div>
+  <div class="category-strip" id="categoryStrip"></div>
+</nav>
+
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Catalog</span>
+    <h2 style="margin-top:.2em;">All gadgets</h2>
+
+    <div class="filters">
+      <select id="sortSelect">
+        <option value="">Sort: Relevance</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="rating">Top Rated</option>
+        <option value="newest">Newest</option>
+      </select>
+      <input type="text" id="searchBox" placeholder="Search within results..." />
+      <div class="spacer"></div>
+      <span class="result-count" id="resultCount"></span>
+    </div>
+
+    <div class="grid" id="productGrid"></div>
+    <div class="empty" id="emptyState" style="display:none;">
+      <div class="glyph">🔎</div>
+      <p>No gadgets matched that search. Try a different keyword or category.</p>
+      <a href="/products.html" class="btn btn-outline btn-sm">Clear filters</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div>
+      <strong>Gadgets in BD</strong>
+      <p class="text-sm mt-8" style="max-width:36ch">Genuine electronics, fast delivery across Bangladesh, and prices that make sense. Est. 2026.</p>
+    </div>
+    <div class="text-sm">
+      <div>📍 Dhaka, Bangladesh</div>
+      <div class="mt-8">☎ +880 1700-000000</div>
+      <div class="mt-8">✉ support@gadgetsinbd.com</div>
+    </div>
+    <div class="text-sm">
+      <div>Cash on Delivery · bKash · Nagad</div>
+      <div class="mt-8">7-day replacement warranty</div>
+    </div>
+  </div>
+</footer>
+
+<div id="toast"></div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/cart.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/pages/products.js"></script>
+</body>
+</html>

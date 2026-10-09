@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin — Gadgets in BD</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css" />
+<style>
+  .admin-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
+  .admin-tab {
+    padding: 10px 16px; font-size: 13.5px; font-weight: 600; color: var(--ink-soft);
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .admin-tab.active { color: var(--ink); border-color: var(--amber); }
+  .admin-panel { display: none; }
+  .admin-panel.active { display: block; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 32px; }
+  .stat-card { background: var(--paper-raised); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 18px; }
+  .stat-card .label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; color: var(--ink-soft); }
+  .stat-card .value { font-family: var(--font-display); font-size: 26px; font-weight: 700; margin-top: 4px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th { text-align: left; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; color: var(--ink-soft); padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  td { padding: 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  tr:hover td { background: var(--paper-raised); }
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .row-actions { display: flex; gap: 6px; }
+  .status-select { padding: 6px 8px; border-radius: var(--radius-sm); border: 1px solid var(--line); font-size: 12.5px; }
+
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(18,23,43,.5);
+    display: none; align-items: center; justify-content: center; padding: 20px; z-index: 60;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--paper-raised); border-radius: var(--radius-lg);
+    padding: 28px; max-width: 480px; width: 100%; max-height: 88vh; overflow-y: auto;
+  }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .spec-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="brand">Gadgets<span class="dot">.</span>BD</a>
+    <span class="badge" style="margin-left:4px;">Admin</span>
+    <div class="nav-links" style="margin-left:auto;">
+      <a href="/index.html" class="nav-icon-link">← Back to store</a>
+      <span id="accountSlot"></span>
+    </div>
+  </div>
+</nav>
+
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Store management</span>
+    <h2 style="margin-top:.2em;">Admin dashboard</h2>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="overview">Overview</button>
+      <button class="admin-tab" data-tab="products">Products</button>
+      <button class="admin-tab" data-tab="orders">Orders</button>
+    </div>
+
+    <div class="admin-panel active" id="panel-overview">
+      <div class="stat-grid" id="statGrid"></div>
+    </div>
+
+    <div class="admin-panel" id="panel-products">
+      <div class="flex justify-between items-center mt-8" style="margin-bottom:16px;">
+        <span class="result-count" id="productCount"></span>
+        <button class="btn btn-primary btn-sm" id="newProductBtn">+ Add product</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th></th></tr></thead>
+          <tbody id="productTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="admin-panel" id="panel-orders">
+      <span class="result-count" id="orderCount" style="display:block; margin-bottom:16px;"></span>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th></tr></thead>
+          <tbody id="orderTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Product add/edit modal -->
+<div class="modal-backdrop" id="productModal">
+  <div class="modal">
+    <h3 id="modalTitle">Add product</h3>
+    <div id="modalError" class="form-error" style="display:none;"></div>
+    <form id="productForm">
+      <input type="hidden" id="pf-id" />
+      <div class="field"><label>Name</label><input type="text" id="pf-name" required /></div>
+      <div class="two-col">
+        <div class="field"><label>Brand</label><input type="text" id="pf-brand" /></div>
+        <div class="field">
+          <label>Category</label>
+          <select id="pf-category" required>
+            <option>Smartphones</option><option>Laptops</option><option>Audio</option>
+            <option>Wearables</option><option>Accessories</option><option>Gaming</option>
+          </select>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="field"><label>Price (৳)</label><input type="number" id="pf-price" min="0" required /></div>
+        <div class="field"><label>Old price (optional)</label><input type="number" id="pf-oldPrice" min="0" /></div>
+      </div>
+      <div class="two-col">
+        <div class="field"><label>Stock</label><input type="number" id="pf-stock" min="0" required /></div>
+        <div class="field"><label>Icon (emoji)</label><input type="text" id="pf-icon" placeholder="📦" /></div>
+      </div>
+      <div class="field"><label>Description</label><textarea id="pf-description" rows="3"></textarea></div>
+
+      <label style="font-size:12.5px; font-weight:600; font-family:var(--font-mono); text-transform:uppercase; color:var(--ink-soft);">Specs</label>
+      <div id="specRows" class="mt-8"></div>
+      <button type="button" class="btn btn-outline btn-sm mt-8" id="addSpecBtn">+ Add spec</button>
+
+      <div class="field mt-16">
+        <label><input type="checkbox" id="pf-featured" style="width:auto; display:inline;" /> Featured on homepage</label>
+      </div>
+
+      <div class="flex gap-12 mt-24">
+        <button type="submit" class="btn btn-primary btn-block" id="saveProductBtn">Save product</button>
+        <button type="button" class="btn btn-outline" id="cancelModalBtn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/cart.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/pages/admin.js"></script>
+</body>
+</html>
